@@ -1,0 +1,53 @@
+<!-- Página para gestionar devoluciones de productos. -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Contenedor de tarjeta con ancho específico y centrado. -->
+<div class="card" style="width: 80rem; margin: 0 auto;">
+  <h1>Devoluciones de Productos</h1>
+  <!-- Formulario para agregar devoluciones con campos y estilos específicos. -->
+  <form id="devolucionForm" method="POST" class="p-4">
+    {% csrf_token %}
+    <!-- Campos para seleccionar producto y cantidad devuelta. -->
+        
+    <div class="mb-3">
+      {{ form.producto.label_tag }}
+      {{ form.producto }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.cantidad_devuelta.label_tag }}
+      {{ form.cantidad_devuelta }}
+    </div>
+    <!-- Botón para enviar el formulario. -->
+    <button type="submit" class="btn btn-success" id="agregarDevolucionBtn">Agregar Devolución</button>
+    <br><br>
+    <a href="../" class="btn btn-danger float-lg-start">VOLVER</a>
+  </form>
+  <!-- Título para la lista de devoluciones. -->
+  <h2 class="mt-4">Lista de Devoluciones:</h2>
+
+  <!-- Lista de devoluciones con estilos específicos. -->
+  <ul id="listaDevoluciones" class="list-group list-group-flush">
+    {% for devolucion in devoluciones_list %}
+       <!-- Elementos de lista para cada devolución con detalles y fecha. -->
+      <li class="list-group-item">
+        {{ devolucion.producto.nombre }} - Devolución de {{ devolucion.cantidad_devuelta }} unidades
+        <span class="text-muted">({{ devolucion.fecha_devolucion|date:"F j, Y H:i" }})</span>
+      </li>
+    {% endfor %}
+  </ul> 
+  <!-- Script JavaScript para funciones adicionales. -->
+  {% if success_message %}
+    <script>
+       // Lógica para cargar y mostrar la lista de devoluciones.
+      document.getElementById("devolucionForm").addEventListener("submit", function (e) {
+        e.preventDefault(); 
+        alert("Se ha realizado la devolución del producto correctamente. Tienes {{ stock_devuelto }} más en el inventario");
+        document.querySelector('form').submit(); 
+      });
+    </script>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<!-- Página para confirmar la eliminación de un producto del inventario. -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Contenedor con fondo rojo, borde y texto blanco. -->
+    <div class="container" style="background-color: darkred; border: 2px solid firebrick; color: white;">
+        <!-- Título principal para confirmación de eliminación. -->
+        <h1>Eliminar Producto</h1>
+        <!-- Mensaje de confirmación y formulario para eliminar el producto. -->
+        <p>¿Estás seguro de que deseas eliminar este producto?</p>
+        <!-- Formulario con método POST para enviar la solicitud de eliminación. -->
+        <form method="post" action="{% url 'eliminar_producto' pk=producto.id %}">
+            {% csrf_token %}
+            <!-- Botón para confirmar la eliminación. -->
+            <button type="submit" class="btn btn-danger" id="eliminarProductoBtn">Sí, Eliminar</button>
+        </form>
+        <br>
+        <!-- Enlace para cancelar y volver a la lista de productos. -->
+        <a href="{% url 'lista_productos' %}" class="btn btn-secondary">Cancelar y Volver</a>
+    </div>
+
+    <script>
+        document.getElementById("eliminarProductoBtn").addEventListener("click", function (e) {
+            e.preventDefault();
+            alert("Producto eliminado correctamente");
+            document.querySelector('form').submit(); 
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,55 @@
+<!-- Barra de navegación superior que contiene el nombre de la aplicación y los enlaces de navegación. -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Contenedor para el diseño responsivo. -->
+  <div class="container">
+      <!-- Enlace a la página principal con estilos personalizados. -->
+      <a class="navbar-brand" href="/" style="text-decoration: none; color: white;">Telas Bombomcito</a>
+      <!-- Botón de alternancia para dispositivos pequeños. -->
+      <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+      >
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Contenido colapsable de la barra de navegación. -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- Lista de enlaces de navegación, alineados a la derecha. -->
+          <ul class="navbar-nav ms-auto">
+              <!-- Enlace a la página de inicio. -->
+              <li class="nav-item">
+                  <a href="{% url 'home' %}" class="nav-link">Inicio</a>
+              </li>
+              {% if user.is_authenticated %}
+                  <!-- Enlaces para usuarios autenticados. -->
+                  <li class="nav-item">
+                      <a href="{% url 'create_producto' %}" class="nav-link">Crear producto</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{% url 'devoluciones' %}" class="nav-link">Devoluciones</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                  </li>
+              {% else %}
+                  <!-- Enlaces para usuarios no autenticados. -->
+                  <li class="nav-item">
+                      <a href="{% url 'signin' %}" class="nav-link">Iniciar Sesión</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{% url 'signup' %}" class="nav-link">Registrarse</a>
+                  </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
+
+  
+  

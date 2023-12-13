@@ -1,0 +1,84 @@
+<!-- Página de inicio que muestra funciones según el estado de autenticación del usuario. -->
+{% extends 'base.html' %} 
+{% block content %}
+<!-- Encabezado de la página con metadatos y enlaces a estilos y scripts. -->
+<html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio</title>
+  <!-- Enlaces a estilos y scripts de Bootstrap. -->
+  <link rel="stylesheet" href="../static/css/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/js/bootstrap.min.js">
+  </head>
+  
+  <body style="background-color: cornflowerblue;">
+    <!-- Barra de navegación con diseño específico. -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkslateblue">
+      <div class="container">
+        <!-- Título centralizado y estilizado. -->
+        <h1 class="text-center mx-auto" style="color: aliceblue;">Gestión de inventario</h1>
+      </div>
+    </nav>
+    {% if user.is_authenticated %}
+    <!-- Sección para usuarios autenticados con funciones específicas. -->
+    <section >
+      <div class="container mt-2">
+        <!-- Filas con tarjetas de funciones para usuarios autenticados. -->
+        <div class="row">
+          <!-- Tarjeta para crear productos con imagen y enlace. -->
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <img src="../static/imagenes/crear.jpg" height="150px" weight="100px" alt="">
+              <div class="card-body" style="background-color:lightsteelblue">
+                <h5 class="card-title  mt-3 mb-3" style="color: darkblue;">Creación de productos</h5>
+                <a href="{% url 'create_producto' %}" class="btn btn-primary">Crear</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <!-- Tarjeta para ver productos con imagen y enlace. -->
+              <img src="../static/imagenes/product.jpg" height="150px" weight="100px" alt="">
+              <div class="card-body" style="background-color:lightsteelblue">
+                <h5 class="card-title  mt-3 mb-3" style="color: darkblue;">Productos</h5>
+                <a href="{% url 'lista_productos' %}" class="btn btn-primary">Ver catálogo</a>
+              </div>
+  
+            </div>
+          </div>
+          
+          <div class="col-md-3 col-sm-6">
+            <div class="card">
+              <!-- Tarjeta para ver gestión de devoluciones con enlace. donde muestra la fecha y el stock que se agregará a la lista de productos -->
+              <img src="../static/imagenes/devoluciones.jpg" height="150px" weight="100px" alt="">
+              <div class="card-body" style="background-color:lightsteelblue">
+                <h5 class="card-title  mt-3 mb-3" style="color: darkblue;">Gestión de devoluciones</h5>
+                <a href="{% url 'devoluciones' %}" class="btn btn-primary">Gestionar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br><br>
+    {% else %}
+    <!-- Sección para usuarios no autenticados con mensaje y enlace a registro o inicio de sesión. -->
+    <div class="container">
+      <div class="card mt-4 text-center">
+        <div class="card-body">
+          <h5 class="card-title">Necesitas tener un usuario registrado y con datos ingresados para ver las funciones de la página.</h5>
+          <p class="card-text">Ve a registrarte o ingresar</p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <!-- Scripts de jQuery y Popper.js para funcionalidades de Bootstrap. -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  </body>
+  
+</html>
+
+{% endblock %}
+

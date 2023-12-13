@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Cuerpo de la página con fondo gris. -->
+<body style="background-color: gray;">
+   <!-- Contenedor principal con bordes y márgenes específicos. -->
+  <div class="container" style="border: 2px solid gray; max-width: 700px; margin: 100px auto; padding: 20px; background-color: #66b2b2; border-radius: 10px;">
+    <!-- Título de registro con color específico. -->
+    <h1 style="color: darkblue;">Registrarse</h1>
+
+    <!-- Mensaje de error si aplica. -->
+    <p>{{ error }}</p>
+
+    <!-- Formulario de registro con diseño específico. -->
+    <form action="" method="POST" style="color: darkblue;">
+      {% csrf_token %}
+      <!-- Campos de formulario generados automáticamente. -->
+      {{ form.as_p}}
+      <!-- Botón para enviar el formulario con diseño específico. -->
+      <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+
+    <!-- Mensaje de error si aplica. -->
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+  </div>
+</body>
+  
+
+{% endblock %}

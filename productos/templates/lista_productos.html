@@ -1,0 +1,90 @@
+<!-- Página que muestra una lista de productos del inventario. -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Estilos específicos para tarjetas de productos. -->
+<style>
+  .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-img-top {
+    object-fit: cover;
+    height: 300px; 
+  }
+
+  .card-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+</style>
+<!-- Contenedor principal con margen superior. -->
+<div class="container mt-5">
+    <div class="alert alert-info display-1 text-center">LISTADO DE PRODUCTOS</div>
+    <!-- Alertas para mensajes de éxito o error. -->
+    {% if success_message %}
+    <div class="alert alert-success" role="alert">
+        {{ success_message }}
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+    </div>
+    {% endif %}
+     <!-- Formulario de búsqueda con estilos específicos. -->
+    <form method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="q" placeholder="Buscar por nombre (Incluir tildes)" value="{{ query }}">
+            <button type="submit" class="btn btn-success">Buscar</button>
+        </div>
+    </form>
+
+    {% if productos %}
+    <!-- Filas con tarjetas de productos generadas dinámicamente. -->
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <!-- Imagen del producto con estilos específicos. -->
+                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="Imagen del producto">
+                <div class="card-body">
+                    <!-- Detalles del producto: nombre, descripción, precio y stock. -->
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">Descripción: {{ producto.descripcion }}</p>
+                    <p class="card-text">Precio por metro: {{ producto.precio }}</p>
+                    <p class="card-text">Stock: {{ producto.stock }}</p>
+                    <!-- Alerta de stock bajo si aplica. -->
+                    {% if producto.descontar_stock %}
+                    <div class="alert alert-warning" role="alert">
+                        ¡Alerta! Quedan pocas unidades en stock.
+                    </div>
+                    {% endif %}
+
+                </div>
+                <!-- Pie de tarjeta con botones de editar y eliminar. -->
+                <div class="card-footer">
+                    <a href="{% url 'editar_producto' pk=producto.id %}" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i> Editar</a>
+                    <a href="{% url 'eliminar_producto' pk=producto.id %}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Eliminar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Mensaje si no hay productos en el sistema. -->
+    <div class="alert alert-primary" role="alert">
+        <strong>No se encuentran productos en el sistema</strong>
+        <br>
+        <a href="{% url 'create_producto' %}" class="btn btn-info">AGREGAR PRODUCTO</a>
+    </div>
+    {% endif %}
+    <!-- Enlace para volver a la página principal. -->
+    <a href="../" class="btn btn-danger float-lg-start">VOLVER</a>
+</div>
+
+{% endblock %}

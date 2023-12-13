@@ -1,0 +1,73 @@
+<!-- Página para agregar un nuevo producto al inventario. -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Contenedor principal con diseño y estilos específicos. -->
+<div class="container my-lg-5 p-lg-5" style="background-color: #66b2b2; border: 2px solid #5c8a8a; border-radius: 10px;">
+    <!-- Título principal centrado y estilizado. -->
+    <h1 class="text-center mb-4" style="color: #ffffff;">Agregar Producto</h1>
+
+    {% if form.errors %}
+        <!-- Mensaje de error en caso de problemas con el formulario. -->
+        <div class="alert alert-danger">
+            <strong>Error:</strong> {{ form.errors }}
+        </div>
+    {% endif %}
+        <!-- Formulario para agregar producto con campos y estilos específicos. -->
+    <form method="post" enctype="multipart/form-data" action="{% url 'create_producto' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <!-- Campo para el nombre del producto. -->
+            <label for="nombre" class="form-label" style="color: #ffffff;">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <!-- Campo para la descripción del producto. -->
+            <label for="descripcion" class="form-label" style="color: #ffffff;">Descripción:</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+        </div>
+        <div class="mb-3">
+            <!-- Campo para el precio del producto. -->
+            <label for="precio" class="form-label" style="color: #ffffff;">Precio:</label>
+            <input type="number" class="form-control" id="precio" name="precio" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <!-- Campo para el stock del producto. -->
+            <label for="stock" class="form-label" style="color: #ffffff;">Stock:</label>
+            <input type="number" class="form-control" id="stock" name="stock" required min="0">
+        </div>
+        <div class="mb-3">
+            <label for="imagen" class="form-label" style="color: #ffffff;">Imagen:</label>
+            <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+        </div>
+        <div class="mb-3">
+            <img id="imagenPreview" src="" alt="Vista previa de la imagen" style="max-width: 100px;">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary" id="agregarProductoBtn">Agregar Producto</button>
+    </form>
+    <!-- Script JavaScript para funciones adicionales. -->
+    <script>
+        document.getElementById("imagen").addEventListener("change", function () {
+            var input = this;
+            var reader = new FileReader();
+             // Lógica para previsualizar la imagen seleccionada.
+            reader.onload = function (e) {
+                document.getElementById("imagenPreview").src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        });
+        // Alerta de éxito y redirección después de agregar el producto.
+        document.getElementById("agregarProductoBtn").addEventListener("click", function () {
+            alert("Producto agregado correctamente");
+            window.location.href = "{% url 'lista_productos' %}";
+        });
+    </script>
+    <br>
+    <!-- Enlace para volver a la lista de productos. -->
+    <a href="{% url 'lista_productos' %}" class="btn btn-lg btn-danger">Volver a la lista de productos</a>
+</div>
+{% endblock %}
+
+

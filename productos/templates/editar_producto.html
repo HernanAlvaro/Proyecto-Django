@@ -1,0 +1,25 @@
+<!-- Página para editar un producto existente en el inventario. -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Contenedor con márgenes y bordes específicos. -->
+    <div class="container my-5 p-5" style="background-color: #66b2b2; border: 2px solid #5c8a8a; border-radius: 10px;">
+         <!-- Título centralizado y estilizado. -->
+        <h1 class="text-center mb-4" style="color: #ffffff;">Editar Producto</h1>
+
+        <!-- Formulario para editar producto con campos y estilos específicos. -->
+        <form method="post" enctype="multipart/form-data" style="text-align:justify;">
+            {% csrf_token %}
+            <!-- Inclusión de campos de formulario generados automáticamente. -->
+            {{ form.as_p }}
+            <!-- Botón para enviar el formulario. -->
+            <button type="submit" class="btn btn-lg btn-primary">Guardar Cambios</button>
+        </form>
+        <br>
+        <!-- Enlace para volver a la lista de productos. -->
+        <a href="{% url 'lista_productos' %}" class="btn btn-lg btn-danger">Volver a la lista de productos</a>
+    </div>
+{% endblock %}
+
+
